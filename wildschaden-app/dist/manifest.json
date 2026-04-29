@@ -1,0 +1,27 @@
+{
+  "name": "Die Wildschaden App – Rechberg & Umgebung",
+  "short_name": "Wildschaden",
+  "description": "Wildschäden schnell und unkompliziert dokumentieren und verwalten.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#00805F",
+  "background_color": "#f9fafb",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "lang": "de",
+  "scope": "/"
+}
