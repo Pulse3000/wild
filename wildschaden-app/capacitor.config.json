@@ -1,0 +1,28 @@
+{
+  "appId": "de.rechberg.wildschaden",
+  "appName": "Wildschaden App",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#00805F",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#00805F"
+    }
+  },
+  "ios": {
+    "scheme": "WildschadenApp",
+    "contentInset": "automatic"
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  }
+}
