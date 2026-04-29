@@ -1,116 +1,124 @@
-# 🦊 Die Wildschaden App – Rechberg & Umgebung
+# 🦊 Wildschaden App – Rechberg
 
-Eine vollständige **Progressive Web App (PWA)** zur Dokumentation und Verwaltung von Wildschäden.
+## Voraussetzungen
 
-## Features
+Installiere folgendes auf deinem Mac/PC, bevor du anfängst:
 
-- 📊 **Übersicht** – Statistiken, Charts (Wildart, Fläche, Betrag)
-- 📋 **Schäden verwalten** – Erfassen, filtern, bearbeiten, löschen
-- 📷 **Foto-Upload** – Kamera & Galerie direkt in der App
-- 🗺️ **Karte** – Alle Schäden auf OpenStreetMap
-- 👥 **Pächter** – Kontakte verwalten mit Telefon & E-Mail
-- 🤖 **KI-Kalkulator** – Automatische Schadensbetrag-Schätzung
-- 📍 **GPS** – Automatische Standorterfassung
-- 📱 **PWA** – Installierbar auf iOS & Android
+| Tool | Link | Warum |
+|---|---|---|
+| Node.js 20+ | https://nodejs.org | Build-Tool |
+| Git | https://git-scm.com | Code herunterladen |
+| Android Studio | https://developer.android.com/studio | Android App |
+| Xcode 15+ (nur Mac) | Mac App Store | iOS App |
 
-## 🚀 Auf Vercel veröffentlichen
+---
 
-### Option 1: Über Vercel Dashboard (empfohlen)
+## Schritt 1 — Code herunterladen
 
-1. [vercel.com](https://vercel.com) → Account erstellen / anmelden
-2. **"Add New Project"** klicken
-3. ZIP entpacken → Ordner `wildschaden-app` auf GitHub pushen (oder direkt hochladen)
-4. In Vercel: **Framework: Vite** auswählen
-5. Build-Einstellungen werden automatisch aus `vercel.json` gelesen
-6. **Deploy** klicken → fertig! ✅
+```bash
+git clone https://github.com/Pulse3000/wild.git
+cd wild/wildschaden-app
+npm install
+```
 
-### Option 2: Vercel CLI
+---
+
+## Schritt 2 — App bauen
+
+```bash
+npm run build
+```
+
+→ Erstellt den `dist/` Ordner mit der fertigen App.
+
+---
+
+## Schritt 3 — Android APK erstellen
+
+```bash
+npx cap sync android
+npx cap open android
+```
+
+Android Studio öffnet sich. Dann:
+
+1. Oben: **Build → Generate Signed App Bundle / APK**
+2. Wähle **APK**
+3. Erstelle einen neuen Keystore (einmalig, gut aufbewahren!)
+4. Build Variant: **release**
+5. **Finish** → APK liegt in `android/app/release/app-release.apk`
+
+Die `.apk` Datei kannst du direkt auf Android-Geräte installieren oder im Google Play Store hochladen.
+
+---
+
+## Schritt 4 — iOS App erstellen (nur Mac)
+
+```bash
+npx cap sync ios
+npx cap open ios
+```
+
+Xcode öffnet sich. Dann:
+
+1. Links oben: dein Projektname auswählen
+2. **Signing & Capabilities** → dein Apple Developer Account auswählen
+3. Oben: Gerät auswählen (dein iPhone oder Simulator)
+4. **▶ Play** drücken → App läuft auf deinem iPhone
+
+Für App Store: **Product → Archive → Distribute App**
+
+---
+
+## Schritt 5 — Als Website veröffentlichen (Vercel)
 
 ```bash
 npm install -g vercel
-cd wildschaden-app
-npm install
-npm run build
 vercel --prod
 ```
 
-### Option 3: Drag & Drop (einfachste Methode)
+→ Gibt dir eine URL wie `https://wild-xyz.vercel.app`
 
-1. `npm run build` ausführen (erstellt `dist/` Ordner)
-2. [vercel.com/new](https://vercel.com/new) → "Deploy from template" → Drag & Drop des `dist/` Ordners
+Auf dieser URL kannst du die App direkt im Browser nutzen **und** auf dem iPhone als PWA installieren (Safari → Teilen → Zum Home-Bildschirm).
 
-## 📱 Als App installieren (nach Vercel-Deployment)
+---
 
-### iOS (iPhone/iPad)
-1. App-URL in **Safari** öffnen
-2. Teilen-Button (⬆️) antippen
-3. **"Zum Home-Bildschirm"** wählen
-4. Name bestätigen → **Hinzufügen**
-
-### Android
-1. App-URL in **Chrome** öffnen  
-2. Menü (⋮) antippen
-3. **"App installieren"** oder **"Zum Startbildschirm hinzufügen"**
-4. Bestätigen
-
-## 🛠️ Lokale Entwicklung
+## Lokale Entwicklung
 
 ```bash
-cd wildschaden-app
-npm install
 npm run dev
-# → http://localhost:5173
 ```
 
-## 📦 Projektstruktur
+→ App läuft auf http://localhost:5173 (Live-Reload, sofortige Änderungen)
+
+---
+
+## App-Struktur
 
 ```
-wildschaden-app/
-├── src/
-│   ├── App.jsx              # Router & Layout
-│   ├── store.js             # Lokaler Datenspeicher (localStorage)
-│   ├── index.css            # Global Styles
-│   ├── components/
-│   │   ├── Header.jsx       # Top-Navigation
-│   │   └── BottomNav.jsx    # Untere Navigation
-│   └── pages/
-│       ├── Uebersicht.jsx   # Dashboard
-│       ├── Schaeden.jsx     # Schadensliste
-│       ├── SchadenMelden.jsx # Schaden erfassen
-│       ├── SchadenDetail.jsx # Schaden Details
-│       ├── Karte.jsx        # Kartenansicht
-│       ├── Paechter.jsx     # Pächter-Verwaltung
-│       └── Einstellungen.jsx # Einstellungen
-├── public/
-│   ├── icon-192.png
-│   ├── icon-512.png
-│   └── manifest.json
-├── vite.config.js           # Vite + PWA Plugin
-├── vercel.json              # Vercel Konfiguration
-└── package.json
+src/
+  pages/
+    Uebersicht.jsx      ← Dashboard mit Statistiken
+    Schaeden.jsx        ← Liste aller Schäden
+    SchadenMelden.jsx   ← Neuen Schaden erfassen
+    SchadenDetail.jsx   ← Einzelner Schaden (Foto, Karte, Bearbeiten)
+    Karte.jsx           ← Alle Schäden auf OpenStreetMap
+    Paechter.jsx        ← Pächter-Kontakte
+    Einstellungen.jsx   ← Einstellungen, Export
+  components/
+    Header.jsx
+    BottomNav.jsx
+  store.js              ← Datenspeicher (localStorage)
 ```
 
-## 🔧 Tech Stack
+---
 
-- **React 18** + React Router v6
-- **Vite** (Build Tool)
-- **vite-plugin-pwa** (PWA + Service Worker)
-- **Recharts** (Charts)
-- **Leaflet** + React Leaflet (Karte)
-- **Lucide React** (Icons)
-- **localStorage** (Datenpersistenz)
+## Häufige Probleme
 
-## 📲 Capacitor (native iOS/Android App)
+**`npm run build` schlägt fehl** → `node --version` prüfen, muss v18+ sein
 
-Um eine echte native App für den App Store zu bauen:
+**Android Studio zeigt Fehler** → SDK 34 in Android Studio installieren: Tools → SDK Manager
 
-```bash
-npm install @capacitor/core @capacitor/cli @capacitor/ios @capacitor/android
-npx cap init "Wildschaden App" "de.rechberg.wildschaden"
-npm run build
-npx cap add ios
-npx cap add android
-npx cap sync
-npx cap open ios     # Öffnet Xcode
-npx cap open android # Öffnet Android Studio
-```
+**iOS: "No signing certificate"** → Xcode → Preferences → Accounts → Apple ID hinzufügen
+
+**Karte lädt nicht** → Internetzugang prüfen (Leaflet braucht OpenStreetMap-Tiles)
